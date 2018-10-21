@@ -6,18 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/10 | ghost_fly2&#39;s blog</title>
+  <title>ghost_fly2&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="The quiter you become, the more you are able to hear">
-<meta property="og:type" content="website">
+  <meta name="description" content="Rock OA version v1.82 stored XSS details (via Uploadfile)Rock OA is a Chinese free office OA system. github 0x00 Vulnerability descriptionThe Rock OA version v1.82 has a stored XSS. Users can upload f">
+<meta property="og:type" content="article">
 <meta property="og:title" content="ghost_fly2&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/10/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/10/21/rockoa2/index.html">
 <meta property="og:site_name" content="ghost_fly2&#39;s blog">
-<meta property="og:description" content="The quiter you become, the more you are able to hear">
+<meta property="og:description" content="Rock OA version v1.82 stored XSS details (via Uploadfile)Rock OA is a Chinese free office OA system. github 0x00 Vulnerability descriptionThe Rock OA version v1.82 has a stored XSS. Users can upload f">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/rockoa2/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/rockoa2/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/rockoa2/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/rockoa2/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/rockoa2/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/rockoa2/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/rockoa2/10.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/rockoa2/9.png">
+<meta property="og:updated_time" content="2018-10-21T09:12:21.208Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ghost_fly2&#39;s blog">
-<meta name="twitter:description" content="The quiter you become, the more you are able to hear">
+<meta name="twitter:description" content="Rock OA version v1.82 stored XSS details (via Uploadfile)Rock OA is a Chinese free office OA system. github 0x00 Vulnerability descriptionThe Rock OA version v1.82 has a stored XSS. Users can upload f">
+<meta name="twitter:image" content="http://yoursite.com/2018/10/21/rockoa2/1.png">
   
     <link rel="alternative" href="/atom.xml" title="ghost_fly2&#39;s blog" type="application/atom+xml">
   
@@ -153,64 +163,148 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-rockoa2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Rock-OA-version-v1-82-stored-XSS-details-via-Uploadfile"><a href="#Rock-OA-version-v1-82-stored-XSS-details-via-Uploadfile" class="headerlink" title="Rock OA version v1.82 stored XSS details (via Uploadfile)"></a>Rock OA version v1.82 stored XSS details (via Uploadfile)</h1><p>Rock OA is a Chinese free office OA system. <a href="https://github.com/rainrocka/xinhu" target="_blank" rel="noopener">github</a></p>
+<h2 id="0x00-Vulnerability-description"><a href="#0x00-Vulnerability-description" class="headerlink" title="0x00 Vulnerability description"></a>0x00 Vulnerability description</h2><p>The Rock OA version v1.82 has a stored XSS. Users can upload files on the common space. Everyone can see these files. A user who uploads a file, and change the file’s name can cause XSS attack.<br><a id="more"></a></p>
+<p>First, We use a test user (low priviledge) in order to imitate the employee to upload files.<br><img src="/2018/10/21/rockoa2/1.png" alt=""></p>
+<p>Then, just change the filename. Interestingly, the system can autocomplete html tags. Therefore, we just need a half of the tag, like “<code>&lt;a&gt; &lt;img&gt;</code>“. So here we use <code>&lt;img src=1 onerror=alert(123)&gt;</code> to replace the file’s name.<br><img src="/2018/10/21/rockoa2/2.png" alt=""></p>
+<p>Upload the file and change the admin account to visit this common space which is used to share files. Then the JS code excute.(The red arrow is used to show the admin account)<br><img src="/2018/10/21/rockoa2/3.png" alt=""></p>
+<h2 id="0X01-POC-amp-EXPLOIT"><a href="#0X01-POC-amp-EXPLOIT" class="headerlink" title="0X01 POC&amp;EXPLOIT"></a>0X01 POC&amp;EXPLOIT</h2><p>The same as before…</p>
+<h2 id="0x02-Vulnerability-cause"><a href="#0x02-Vulnerability-cause" class="headerlink" title="0x02 Vulnerability cause"></a>0x02 Vulnerability cause</h2><p>Users need two steps to upload files.<br>First, send a post package to this url:<br><img src="/2018/10/21/rockoa2/4.png" alt=""><br>Then,send a post package to this url:<br><img src="/2018/10/21/rockoa2/5.png" alt=""><br>The first url’s function can be found in webmain/public/upload/uploadAction.php line 23<br><img src="/2018/10/21/rockoa2/6.png" alt=""><br>The ‘upfileajax’ function use the ‘upfile’ class(line 26). So we traced to the ‘upfile’ class. In include/chajian/upfileChajian.php. And in webmain/public/upload/uploadAction.php line 32(uploadback method), the system save the file and insert the file’s information into database. It can filter some special chars, but not enough.<br><img src="/2018/10/21/rockoa2/10.png" alt=""><br>The second url’s fucntion can be found in webmain/system/word/wordAction.php line 59(savefileAjax).It’s only save the informaiton into the database.<br><img src="/2018/10/21/rockoa2/9.png" alt=""></p>
+<h2 id="0x03-Solution"><a href="#0x03-Solution" class="headerlink" title="0x03 Solution"></a>0x03 Solution</h2><p>In order to solve this problem, the system need to filter html tags strictly before save it in the database.</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/21/rockoa2/" class="archive-article-date">
-  	<time datetime="2018-10-21T09:12:21.240Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-21</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/10/21/rockoa2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/20/rockoa1/" class="archive-article-date">
-  	<time datetime="2018-10-20T03:44:35.535Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-20</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/10/20/rockoa1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -233,8 +327,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
