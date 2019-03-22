@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/03/22/ykms17010/1.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/22/ykms17010/2.png">
-<meta property="og:updated_time" content="2019-03-22T09:00:37.256Z">
+<meta property="og:updated_time" content="2019-03-22T11:02:18.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ghost_fly2&#39;s blog">
 <meta name="twitter:description" content="简单记录MSF ms17-010苛刻条件下使用">
@@ -162,11 +162,10 @@
       
         <h1 id="简单记录MSF-ms17-010苛刻条件下使用"><a href="#简单记录MSF-ms17-010苛刻条件下使用" class="headerlink" title="简单记录MSF ms17-010苛刻条件下使用"></a>简单记录MSF ms17-010苛刻条件下使用</h1><a id="more"></a>
 <p>题外话: 最近打算将以前的记录整理到一个博客来, 懒得在自己的那几个服务器上搭建了, 就直接用git的好了.</p>
-<p>##0x00 MSF中的ms17-010模块</p>
-<p>####auxiliary/scanner/smb/smb_ms17_010<br>扫描模块,用于批量扫是否存在ms17-010漏洞, 其中主要设置RHOSTS和THREADS即可.</p>
-<p>####auxiliary/admin/smb/ms17_010_command<br>可用于执行命令, 并且有回显. 使用有一定限制, 下文讲.</p>
-<p>####exploit/windows/smb/ms17_010_eternalblue<br>无需多言, 默认payload是反弹tcp连接.</p>
-<p>####exploit/windows/smb/ms17_010_psexec<br>与eternalblue类似, 只不过具有更高的可靠性和优先级. 使用有一定限制, 与ms17_010_command类似.</p>
+<h2 id="0x00-MSF中的ms17-010模块"><a href="#0x00-MSF中的ms17-010模块" class="headerlink" title="0x00 MSF中的ms17-010模块"></a>0x00 MSF中的ms17-010模块</h2><h4 id="auxiliary-scanner-smb-smb-ms17-010"><a href="#auxiliary-scanner-smb-smb-ms17-010" class="headerlink" title="auxiliary/scanner/smb/smb_ms17_010"></a>auxiliary/scanner/smb/smb_ms17_010</h4><p>扫描模块,用于批量扫是否存在ms17-010漏洞, 其中主要设置RHOSTS和THREADS即可.</p>
+<h4 id="auxiliary-admin-smb-ms17-010-command"><a href="#auxiliary-admin-smb-ms17-010-command" class="headerlink" title="auxiliary/admin/smb/ms17_010_command"></a>auxiliary/admin/smb/ms17_010_command</h4><p>可用于执行命令, 并且有回显. 使用有一定限制, 下文讲.</p>
+<h4 id="exploit-windows-smb-ms17-010-eternalblue"><a href="#exploit-windows-smb-ms17-010-eternalblue" class="headerlink" title="exploit/windows/smb/ms17_010_eternalblue"></a>exploit/windows/smb/ms17_010_eternalblue</h4><p>无需多言, 默认payload是反弹tcp连接.</p>
+<h4 id="exploit-windows-smb-ms17-010-psexec"><a href="#exploit-windows-smb-ms17-010-psexec" class="headerlink" title="exploit/windows/smb/ms17_010_psexec"></a>exploit/windows/smb/ms17_010_psexec</h4><p>与eternalblue类似, 只不过具有更高的可靠性和优先级. 使用有一定限制, 与ms17_010_command类似.</p>
 <h2 id="0x01-目标机条件"><a href="#0x01-目标机条件" class="headerlink" title="0x01 目标机条件"></a>0x01 目标机条件</h2><p>1.不允许额外监听端口<br>2.不允许外连<br>3.不通外网<br>4.存在ms17-010漏洞<br>5.目标机器为:Winserver2008<br>6.IPC$不允许匿名登录,且不知道目标服务器中的任何用户名密码<br>7.3389开放</p>
 <h2 id="0x02-分析"><a href="#0x02-分析" class="headerlink" title="0x02 分析"></a>0x02 分析</h2><p>先用scanner扫了一下,发现某机器存在漏洞.<br>一开始是想用eternalbule直接打的, 后来发现shell无法弹到我的外网服务器上. 猜测该机器第一不通外网, 第二被杀软拦了外连请求.<br>既然不通外网, 那为什么不自己开个端口呢? 内网上nc直连,多舒服. 结果,依旧失败, 对方主机积极拒绝.<br>无法弹shell的话,那就直接加个管理员账号,登3389拉倒了.<br>一开始使用<code>auxiliary/admin/smb/ms17_010_command</code>,但出现了如下问题:<br><img src="/2019/03/22/ykms17010/1.png" alt=""><br>该问题主要原因在于, winserver2008默认不支持匿名登录, 因此必须设置已知账号密码才行.(ms17_010_psexec是一个道理)<br>改用<code>exploit/windows/smb/ms17_010_eternalblue</code> 修改payload: <code>set payload windows/x64/exec</code>(如果32位就是<code>windows/exec</code>)<br>这里需要注意的是, 一般要把进程名改成<code>lsass.exe</code>, 这样不容易蓝屏.<br>另外, 在执行的过程中, 会出现如下FAIL字样并重复执行, 无关紧要, 命令还是会执行的.<br><img src="/2019/03/22/ykms17010/2.png" alt=""><br>之后直接连3389就行了. LET’S GET THE PARTY START.</p>
 
@@ -291,7 +290,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简单记录MSF-ms17-010苛刻条件下使用"><span class="toc-number">1.</span> <span class="toc-text">简单记录MSF ms17-010苛刻条件下使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-目标机条件"><span class="toc-number">1.1.</span> <span class="toc-text">0x01 目标机条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-分析"><span class="toc-number">1.2.</span> <span class="toc-text">0x02 分析</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简单记录MSF-ms17-010苛刻条件下使用"><span class="toc-number">1.</span> <span class="toc-text">简单记录MSF ms17-010苛刻条件下使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-MSF中的ms17-010模块"><span class="toc-number">1.1.</span> <span class="toc-text">0x00 MSF中的ms17-010模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#auxiliary-scanner-smb-smb-ms17-010"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">auxiliary/scanner/smb/smb_ms17_010</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#auxiliary-admin-smb-ms17-010-command"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">auxiliary/admin/smb/ms17_010_command</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#exploit-windows-smb-ms17-010-eternalblue"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">exploit/windows/smb/ms17_010_eternalblue</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#exploit-windows-smb-ms17-010-psexec"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">exploit/windows/smb/ms17_010_psexec</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-目标机条件"><span class="toc-number">1.2.</span> <span class="toc-text">0x01 目标机条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-分析"><span class="toc-number">1.3.</span> <span class="toc-text">0x02 分析</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
