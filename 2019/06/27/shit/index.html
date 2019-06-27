@@ -6,18 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.ghostfly2.ml">
-  <title>Archives | ghost_fly2&#39;s blog</title>
+  <title>ghost_fly2&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="The quiter you become, the more you are able to hear">
-<meta property="og:type" content="website">
+  <meta name="description" content="How can I delete my ID card picture from the target?我很少写博客, 也从来不做任何项目记录. 只因为这次经历比较独特, 特此记录,警醒自己做事要胆大心细.">
+<meta property="og:type" content="article">
 <meta property="og:title" content="ghost_fly2&#39;s blog">
-<meta property="og:url" content="http://www.ghostfly2.ml/archives/index.html">
+<meta property="og:url" content="http://www.ghostfly2.ml/2019/06/27/shit/index.html">
 <meta property="og:site_name" content="ghost_fly2&#39;s blog">
-<meta property="og:description" content="The quiter you become, the more you are able to hear">
+<meta property="og:description" content="How can I delete my ID card picture from the target?我很少写博客, 也从来不做任何项目记录. 只因为这次经历比较独特, 特此记录,警醒自己做事要胆大心细.">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.ghostfly2.ml/2019/06/27/shit/sql1.png">
+<meta property="og:image" content="http://www.ghostfly2.ml/2019/06/27/shit/1.png">
+<meta property="og:image" content="http://www.ghostfly2.ml/2019/06/27/shit/code1.png">
+<meta property="og:image" content="http://www.ghostfly2.ml/2019/06/27/shit/code2.png">
+<meta property="og:image" content="http://www.ghostfly2.ml/2019/06/27/shit/changepwd21.png">
+<meta property="og:image" content="http://www.ghostfly2.ml/2019/06/27/shit/changepwd1.png">
+<meta property="og:image" content="http://www.ghostfly2.ml/2019/06/27/shit/shell01.png">
+<meta property="og:image" content="http://www.ghostfly2.ml/2019/06/27/shit/shell1.png">
+<meta property="og:updated_time" content="2019-06-27T09:28:57.646Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ghost_fly2&#39;s blog">
-<meta name="twitter:description" content="The quiter you become, the more you are able to hear">
+<meta name="twitter:description" content="How can I delete my ID card picture from the target?我很少写博客, 也从来不做任何项目记录. 只因为这次经历比较独特, 特此记录,警醒自己做事要胆大心细.">
+<meta name="twitter:image" content="http://www.ghostfly2.ml/2019/06/27/shit/sql1.png">
   
     <link rel="alternative" href="/atom.xml" title="ghost_fly2&#39;s blog" type="application/atom+xml">
   
@@ -151,116 +161,168 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-shit" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
       
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/27/shit/" class="archive-article-date">
-  	<time datetime="2019-06-27T09:28:57.646Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        <h1 id="How-can-I-delete-my-ID-card-picture-from-the-target"><a href="#How-can-I-delete-my-ID-card-picture-from-the-target" class="headerlink" title="How can I delete my ID card picture from the target?"></a>How can I delete my ID card picture from the target?</h1><p>我很少写博客, 也从来不做任何项目记录. 只因为这次经历比较独特, 特此记录,警醒自己做事要胆大心细.<br><a id="more"></a></p>
+<h2 id="0x00-故事背景"><a href="#0x00-故事背景" class="headerlink" title="0x00 故事背景"></a>0x00 故事背景</h2><p>此次过程中, 在拿到某目标后台管理后, 手贱不小心将自己的手持身份证照片上传于目标服务器. 然而网站后台不可删除照片.</p>
+<h2 id="0x01-随便说说"><a href="#0x01-随便说说" class="headerlink" title="0x01 随便说说"></a>0x01 随便说说</h2><p>先简单从如何拿到进入网站后台管理说起吧<br>毫无难度, 前台登陆处存在sql注入,如下图.<br><img src="/2019/06/27/shit/sql1.png" alt=""></p>
+<p>但数据库用户权限不够,无法直接写shell. 遂直接进入后台.<br>在找getshell的时候, 我在此处上传点不小心传上了我的手持ID照片, 上传点如下图<br><img src="/2019/06/27/shit/1.png" alt=""></p>
+<p>妈的. 拿不到shell删不了照片, 老子职业生涯就要断送了.<br>情急之下, 查了个子域, 发现另外一个站, tp5.0, 嘿嘿一笑.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index.php?s=captcha</span><br><span class="line">POST:</span><br><span class="line">_method=__construct&amp;method=get&amp;filter[]=assert&amp;get[]=file_put_contents(&apos;/data/wwwroot/xxxxxxxx/public/xxxxxx.php&apos;,&apos;&lt;?php phpinfo(); ?&gt;&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>直接写文件拿shell, 然而, 该站禁用了各种函数. 于是乎, 把shell改成了上传文件脚本, 果断通过LD_PRELOAD绕过disable function.<br>上去dir看了一下目录, 发现里面有N多旁站. 其中一个旁站的文件居然和我的目标一样, 遂拖回源码审一审.<br>经过分析各种文件操作点, 控制的非常死, 唯一有一处疑似可绕过, 如下图:<br><img src="/2019/06/27/shit/code1.png" alt=""><br>这里UsersID和owner_id可控, $img文件内容可控. 继续跟进generate_postere函数. 如下图<br><img src="/2019/06/27/shit/code2.png" alt=""><br>这里说白了$img变量传base64编码内容即可, 唯一需要靠脑子截断绕过的就是’.png’后缀<br>服务器为winserver2008, apahce.<br>解析漏洞率先排除.<br>%00不行, php版本5.5.0<br>通过冒号绕过只能写空文件, 排除.<br>通过通配符, 先请求xxx.php:.png, 再使用xxx.ph&lt; ,失效.<br>无法截断, 放弃该点</p>
+<p>苦恼之际, 发现还没扫目标旁站. 遂果断查询, 发现同ip下某一系统. 为了保密, 就不放后台截图了.<br>通过之前的信息搜集, 拿到一个低权限用户账号, 登入. 发现是某知名cms后台.<br>修改密码处存在任意密码修改, 只需改变uid的值, 如下图:<br><img src="/2019/06/27/shit/changepwd21.png" alt=""><br><img src="/2019/06/27/shit/changepwd1.png" alt=""><br>这里之所以修改uid的值为1, 是我猜测uid为1的用户就是admin, 果不其然….<br>登录之后, 先开启sql执行, 然后添加上传后缀为aaa.<br><img src="/2019/06/27/shit/shell01.png" alt=""><br>通过update将aaa改为’php ‘,注意 这里有个空格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE ims_core_settings SET value = replace(value, &apos;123&apos;, &apos;php &apos;)</span><br></pre></td></tr></table></figure>
+<p>然后找了一个图片上传点, 直接拿到shell!<br><img src="/2019/06/27/shit/shell1.png" alt=""><br>管理员权限开启的服务器, 直接跨目录删照片, 爽就一个字</p>
+<h2 id="0x02-总结"><a href="#0x02-总结" class="headerlink" title="0x02 总结"></a>0x02 总结</h2><p>总体成果是: 2台服务器权限, 但过程其实是(1)A站后台 (2)B服务器权限 (3)A站旁站后台 (4)A站服务器</p>
+<ol>
+<li>做事要小心仔细, 切不可大意, 每次做事都应该当做第一次来做, 这样才不会出错.</li>
+<li>信息搜集很关键.</li>
+<li>这次特例写一次渗透过程, 只为纪念一次独特的经历, 以前不会写, 以后更不会写.</li>
+</ol>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.ghostfly2.ml/2019/06/27/shit/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/22/ykms17010/" class="archive-article-date">
-  	<time datetime="2019-03-22T11:04:03.648Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-22</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/21/rockoa2/" class="archive-article-date">
-  	<time datetime="2018-10-21T09:14:00.372Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-21</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/22/ykms17010/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/20/rockoa1/" class="archive-article-date">
-  	<time datetime="2018-10-20T03:44:35.535Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-20</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#How-can-I-delete-my-ID-card-picture-from-the-target"><span class="toc-number">1.</span> <span class="toc-text">How can I delete my ID card picture from the target?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-故事背景"><span class="toc-number">1.1.</span> <span class="toc-text">0x00 故事背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-随便说说"><span class="toc-number">1.2.</span> <span class="toc-text">0x01 随便说说</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-总结"><span class="toc-number">1.3.</span> <span class="toc-text">0x02 总结</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -283,8 +345,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
